@@ -18,3 +18,31 @@ Route::get('/about', function () {
 Route::get('/contact.php', function () {
     return view('contact');
 })->name('contact');
+
+Route::get('/layout.php', function () {
+    return view('layout');
+})->name('layout');
+
+Route::get('/camera.php', function () {
+    return view('camera');
+})->name('camera');
+
+Route::get('/custom.php', function () {
+    return view('custom');
+})->name('custom');
+
+Route::get('/login.php', function () {
+    return view('login');
+})->name('login');
+
+Route::get('/contact.php', function () {
+    return view('contact');
+})->name('contact');
+
+Route::get('/contact.php', function () {
+    return view('contact');
+})->name('contact');
+
+Route::get('/contact.php', function () {
+    return view('contact');
+})->name('contact');
