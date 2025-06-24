@@ -15,37 +15,37 @@
     .nav-link:hover {
       color: #c3f0ca;
     }
-    .photo-strip {
+    .photo-container {
       background: white;
-      padding: 10px;
+      padding: 20px;
       border-radius: 10px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
+      width: 100%;
+      max-width: 300px;
     }
     .photo-frame {
-      border: 2px solid #33272a;
+      aspect-ratio: 1/1;
+      width: 100%;
+      /* height: 190px; */  /* HAPUS atau KOMENTARI ini */
+      overflow: hidden;
+      background-color: #f5f5f5;
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
     .brand-text {
       font-family: 'Arial', sans-serif;
       font-weight: bold;
       text-align: center;
       color: #33272a;
-      margin-top: 5px;
-    }
-    .photo-row {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-    .photo-row:last-child {
-      margin-bottom: 0;
+      margin-top: 15px;
     }
   </style>
 </head>
@@ -56,9 +56,9 @@
     <div class="flex items-center justify-between">
       <div class="font-bold text-lg">Photobooth</div>
       <ul class="flex gap-6 text-sm">
-        <li><a href="home.blade.php" class="nav-link active">Home</a></li>
-        <li><a href="about.blade.php" class="nav-link">About</a></li>
-        <li><a href="contact.blade.php" class="nav-link">Contact</a></li>
+        <li><a href="home.php" class="nav-link">Home</a></li>
+        <li><a href="about.php" class="nav-link">About</a></li>
+        <li><a href="contact.php" class="nav-link">Contact</a></li>
       </ul>
       <div class="font-bold text-lg">Aurami</div>
     </div>
@@ -68,7 +68,7 @@
   <div class="max-w-7xl mx-auto px-4 py-10 grid grid-cols-1 lg:grid-cols-2 gap-10 flex-grow">
     <!-- Left: Photo Strip -->
     <div class="flex justify-center">
-      <div id="photoContainer" class="bg-white p-4 rounded-xl shadow-md flex flex-col items-center space-y-4">
+      <div id="photoContainer" class="photo-container">
         <!-- Photos will be inserted here by JavaScript -->
       </div>
     </div>
@@ -77,7 +77,7 @@
     <div class="space-y-6">
       <h2 class="text-lg font-semibold">Customize your photo</h2>
 
-      <!-- Frame Colors -->
+      <!-- Frame Colors - SEMUA WARNA KEMBALI -->
       <div>
         <p class="font-medium mb-2">Frame color:</p>
         <div id="colorOptions" class="flex flex-wrap gap-4">
@@ -120,90 +120,98 @@
   </footer>
 
   <script>
+    // Debug: Log data from localStorage
+    console.log("Loaded photos:", JSON.parse(localStorage.getItem('capturedPhotos')));
+    console.log("Selected layout:", localStorage.getItem('selectedLayout'));
+
     // Get photos from localStorage
     const capturedPhotos = JSON.parse(localStorage.getItem('capturedPhotos')) || [];
-    const selectedLayout = localStorage.getItem('selectedLayout') || 'd'; // Default to layout D for this example
+    const selectedLayout = localStorage.getItem('selectedLayout') || 'a';
     const photoContainer = document.getElementById('photoContainer');
-    const colorButtons = document.querySelectorAll('#colorOptions button');
-    const shapeButtons = document.querySelectorAll('#shapeOptions button');
-    const retakeBtn = document.getElementById('retakeBtn');
-    const downloadBtn = document.getElementById('downloadBtn');
+
+    // Check if there are photos
+    if (capturedPhotos.length === 0) {
+      alert('Tidak ada foto yang ditemukan. Silahkan ambil foto terlebih dahulu.');
+      window.location.href = 'layout.php';
+    }
 
     // Display photos based on layout
     function displayPhotos() {
-      photoContainer.innerHTML = '';
-      
-      // For layout D (6 photos) - 2 top, 2 middle, 2 bottom
-      if (selectedLayout === 'd') {
-        const photosToShow = capturedPhotos.slice(0, 6);
-        
-        // Create rows for the photos
-        const topRow = document.createElement('div');
-        topRow.className = 'photo-row';
-        
-        const middleRow = document.createElement('div');
-        middleRow.className = 'photo-row';
-        
-        const bottomRow = document.createElement('div');
-        bottomRow.className = 'photo-row';
-        
-        // Add photos to rows (2 each)
-        for (let i = 0; i < 6; i++) {
-          const frame = document.createElement('div');
-          frame.className = 'photo-frame w-40 h-40'; // Fixed size for each photo
-          
-          const img = document.createElement('img');
-          img.src = photosToShow[i] || ''; // Fallback to empty if photo doesn't exist
-          img.className = 'w-full h-full object-cover';
-          frame.appendChild(img);
-          
-          if (i < 2) {
-            topRow.appendChild(frame);
-          } else if (i < 4) {
-            middleRow.appendChild(frame);
-          } else {
-            bottomRow.appendChild(frame);
-          }
-        }
-        
-        photoContainer.appendChild(topRow);
-        photoContainer.appendChild(middleRow);
-        photoContainer.appendChild(bottomRow);
-      }
-      
-      // Add brand text exactly as in the image
-      const brandText = document.createElement('div');
-      brandText.className = 'brand-text';
-      brandText.innerHTML = `
-        <div style="font-size: 24px; line-height: 1;">AURAMI</div>
-        <div style="font-size: 14px; line-height: 1;">Photobooth</div>
-      `;
-      photoContainer.appendChild(brandText);
-    }
+  photoContainer.innerHTML = '';
+
+  const photosContainer = document.createElement('div');
+
+  if (selectedLayout === 'd') {
+    photosContainer.className = 'grid grid-cols-2 gap-3 justify-center';
+
+    capturedPhotos.slice(0, 6).forEach((photo, index) => {
+      const frame = document.createElement('div');
+      frame.className = 'photo-frame';
+
+      const img = document.createElement('img');
+      img.src = photo;
+      img.alt = `Photo ${index + 1}`;
+      img.onerror = function () {
+        this.parentNode.innerHTML = '<div class="text-center p-2 text-xs">Gambar tidak dapat dimuat</div>';
+      };
+
+      frame.appendChild(img);
+      photosContainer.appendChild(frame);
+    });
+  } else {
+    photosContainer.className = 'flex flex-col gap-3';
+
+    capturedPhotos.forEach((photo, index) => {
+      const frame = document.createElement('div');
+      frame.className = 'photo-frame';
+
+      const img = document.createElement('img');
+      img.src = photo;
+      img.alt = `Photo ${index + 1}`;
+      img.onerror = function () {
+        this.parentNode.innerHTML = '<div class="text-center p-2 text-xs">Gambar tidak dapat dimuat</div>';
+      };
+
+      frame.appendChild(img);
+      photosContainer.appendChild(frame);
+    });
+  }
+
+  photoContainer.appendChild(photosContainer);
+
+  const brandText = document.createElement('div');
+  brandText.className = 'brand-text';
+  brandText.innerHTML = `
+    <div style="font-size: 24px; line-height: 1;">AURAMI</div>
+    <div style="font-size: 14px; line-height: 1;">Photobooth</div>
+  `;
+  photoContainer.appendChild(brandText);
+}
+
 
     // Initialize
     displayPhotos();
 
-    // Frame color change
-    colorButtons.forEach(btn => {
+    // Frame color changes
+    document.querySelectorAll('#colorOptions button').forEach(btn => {
       btn.addEventListener('click', () => {
         const selectedColor = btn.dataset.color;
-        colorButtons.forEach(b => b.classList.remove('ring', 'ring-[#ff8ba7]', 'ring-offset-2'));
+        document.querySelectorAll('#colorOptions button').forEach(b => {
+          b.classList.remove('ring', 'ring-[#ff8ba7]', 'ring-offset-2');
+        });
         btn.classList.add('ring', 'ring-[#ff8ba7]', 'ring-offset-2');
         
-        if (selectedColor === "none") {
-          photoContainer.style.backgroundColor = "white";
-        } else {
-          photoContainer.style.backgroundColor = selectedColor;
-        }
+        photoContainer.style.backgroundColor = selectedColor === "none" ? "white" : selectedColor;
       });
     });
 
     // Photo shape change
-    shapeButtons.forEach(btn => {
+    document.querySelectorAll('#shapeOptions button').forEach(btn => {
       btn.addEventListener('click', () => {
         const selectedShape = btn.dataset.shape;
-        shapeButtons.forEach(b => b.classList.remove('btn-active'));
+        document.querySelectorAll('#shapeOptions button').forEach(b => {
+          b.classList.remove('btn-active');
+        });
         btn.classList.add('btn-active');
 
         const photoFrames = document.querySelectorAll('.photo-frame');
@@ -211,31 +219,23 @@
           frame.classList.remove('rounded-none', 'rounded-lg', 'rounded-full');
           
           switch(selectedShape) {
-            case 'square':
-              frame.classList.add('rounded-none');
-              break;
-            case 'rounded':
-              frame.classList.add('rounded-lg');
-              break;
-            case 'circle':
-              frame.classList.add('rounded-full');
-              break;
+            case 'square': frame.classList.add('rounded-none'); break;
+            case 'rounded': frame.classList.add('rounded-lg'); break;
+            case 'circle': frame.classList.add('rounded-full'); break;
           }
         });
       });
     });
 
-    // Retake button - go back to camera
-    retakeBtn.addEventListener('click', () => {
-      window.location.href = camera.blade.php?layout=${selectedLayout};
+    // Retake button
+    document.getElementById('retakeBtn').addEventListener('click', () => {
+      window.location.href = `camera.php?layout=${selectedLayout}`;
     });
 
     // Download button
-    downloadBtn.addEventListener('click', () => {
-      // In a real implementation, you would create a download link for the photo strip
-      alert('Your customized photo strip has been downloaded!');
+    document.getElementById('downloadBtn').addEventListener('click', () => {
+      alert('Your customized photo strip has been downloaded! (Simulasi)');
     });
   </script>
 </body>
 </html>
-custom

@@ -47,20 +47,16 @@
 </head>
 <body class="min-h-screen flex flex-col" style="background-color: #faeee7;">
 
-  <!-- Navbar -->
-  <div class="navbar rounded-b-2xl shadow-md px-6 max-w-7xl mx-auto mt-4" style="background-color: #ffb0c2;">
-    <div class="flex-1">
-      <a class="text-lg font-bold">Photobooth</a>
-    </div>
-    <div class="flex-none">
-      <ul class="menu menu-horizontal px-1">
+    <!-- Navbar -->
+  <div class="w-full rounded-2xl px-6 py-3 max-w-7xl mx-auto mt-4" style="background-color: #ffb0c2;">
+    <div class="flex items-center justify-between">
+      <div class="font-bold text-lg">Photobooth</div>
+      <ul class="flex gap-6 text-sm">
         <li><a href="home.php" class="nav-link">Home</a></li>
         <li><a href="about.php" class="nav-link">About</a></li>
         <li><a href="contact.php" class="nav-link">Contact</a></li>
       </ul>
-    </div>
-    <div class="flex-1 justify-end hidden sm:flex">
-      <span class="text-lg font-bold">Aurami</span>
+      <div class="font-bold text-lg">Aurami</div>
     </div>
   </div>
 
@@ -99,7 +95,7 @@
       <button data-filter="vivid" class="filter-btn btn btn-circle w-14 h-14" style="background-color: #F5F1EB;">ViVid</button>
       <button data-filter="soft" class="filter-btn btn btn-circle w-14 h-14" style="background-color: #F5F1EB;">Soft</button>
       <button data-filter="bw" class="filter-btn btn btn-circle w-14 h-14" style="background-color: #F5F1EB;">B&W</button>
-      <button id="invertBtn" class="btn btn-circle w-14 h-14" style="background-color: #F5F1EB;">↔</button>
+      <button id="invertBtn" class="btn btn-circle w-14 h-14" style="background-color: #F5F1EB;">↔️</button>
     </div>
   </main>
 
@@ -250,7 +246,7 @@ window.onload = function () {
       localStorage.setItem('selectedLayout', layout);
       window.location.href = 'custom.php';
     } else {
-      alert(Please take ${totalShots} photos first!);
+      alert(`Please take ${totalShots} photos first!`);
     }
   });
 
@@ -286,7 +282,7 @@ window.onload = function () {
   const invertBtn = document.getElementById('invertBtn');
   invertBtn.addEventListener('click', () => {
     isMirrored = !isMirrored;
-    video.style.transform = scaleX(${isMirrored ? -1 : 1});
+    video.style.transform = `scaleX(${isMirrored ? -1 : 1})`;
   });
 };
 </script>
