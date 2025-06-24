@@ -18,3 +18,10 @@ Route::get('/about.blade.php', function () {
 Route::get('/contact.blade.php', function () {
     return view('contact');
 })->name('contact');
+
+Route::get('/dashboard.blade.php', function () {
+    return view('dashboard');
+})->name('dashboard');
+
+
+

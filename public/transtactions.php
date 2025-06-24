@@ -15,12 +15,12 @@
         <h1 class="text-xl font-bold">Admin</h1>
       </div>
       <nav class="space-y-4 text-sm">
-        <a href="dashboard.blade.php" class="block text-white font-semibold">Dashboard</a>
-        <a href="transtactions.blade.php" class="block text-white">Transactions</a>
-        <a href="customers.blade.php" class="block text-white">Customers</a>
-        <a href="custome_layout.blade.php" class="block text-white">Custome Layout</a>
-        <a href="settings.blade.php" class="block text-white">Settings</a>
-        <a href="login.blade.php" class="block text-white text-red-400 mt-10 hover:text-red-600">Logout</a>
+        <a href="dashboard.php" class="block text-white font-semibold">Dashboard</a>
+        <a href="transtactions.php" class="block text-white">Transactions</a>
+        <a href="customers.php" class="block text-white">Customers</a>
+        <a href="custome_layout.php" class="block text-white">Custome Layout</a>
+        <a href="settings.php" class="block text-white">Settings</a>
+        <a href="login.php" class="block text-white text-red-400 mt-10 hover:text-red-600">Logout</a>
       </nav>
     </aside>
 
