@@ -27,9 +27,9 @@
     <div class="flex items-center justify-between">
       <div class="font-bold text-lg">Photobooth</div>
       <ul class="flex gap-6 text-sm">
-        <li><a href="home.blade.php" class="nav-link">Home</a></li>
-        <li><a href="about.blade.php" class="nav-link">About</a></li>
-        <li><a href="contact.blade.php" class="nav-link">Contact</a></li>
+        <li><a href="home.php" class="nav-link">Home</a></li>
+        <li><a href="about.php" class="nav-link">About</a></li>
+        <li><a href="contact.php" class="nav-link">Contact</a></li>
       </ul>
       <div class="font-bold text-lg">Aurami</div>
     </div>
@@ -48,7 +48,7 @@
       <div class="flex flex-wrap justify-center items-start gap-8">
 
         <!-- Layout A (2 photos) -->
-        <a href="camera.blade.php?layout=a" class="flex flex-col items-center transform transition hover:scale-105">
+        <a href="camera.php?layout=a" class="flex flex-col items-center transform transition hover:scale-105">
           <div class="card bg-white shadow-md w-[150px] p-3">
             <img src="images/2.jpg" alt="Layout A" class="h-56 object-cover rounded"/>
             <div class="text-center mt-2 font-bold text-sm">AURAMI</div>
@@ -60,7 +60,7 @@
         </a>
 
         <!-- Layout B (3 photos) -->
-        <a href="camera.blade.php?layout=b" class="flex flex-col items-center transform transition hover:scale-105">
+        <a href="camera.php?layout=b" class="flex flex-col items-center transform transition hover:scale-105">
           <div class="card bg-white shadow-md w-[150px] p-3">
             <img src="images/3.jpg" alt="Layout B" class="h-56 object-cover rounded"/>
             <div class="text-center mt-2 font-bold text-sm">AURAMI</div>
@@ -72,7 +72,7 @@
         </a>
 
         <!-- Layout C (4 photos) -->
-        <a href="camera.blade.php?layout=c" class="flex flex-col items-center transform transition hover:scale-105">
+        <a href="camera.php?layout=c" class="flex flex-col items-center transform transition hover:scale-105">
           <div class="card bg-white shadow-md w-[150px] p-3">
             <img src="images/4.jpg" alt="Layout C" class="h-56 object-cover rounded"/>
             <div class="text-center mt-2 font-bold text-sm">AURAMI</div>
@@ -84,7 +84,7 @@
         </a>
 
         <!-- Layout D (6 photos) -->
-        <a href="camera.blade.php?layout=d" class="flex flex-col items-center transform transition hover:scale-105">
+        <a href="camera.php?layout=d" class="flex flex-col items-center transform transition hover:scale-105">
           <div class="card bg-white shadow-md w-[150px] p-3">
             <img src="images/6.jpg" alt="Layout D" class="h-56 object-cover rounded"/>
             <div class="text-center mt-2 font-bold text-sm">AURAMI</div>

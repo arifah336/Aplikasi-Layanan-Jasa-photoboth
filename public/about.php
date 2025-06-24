@@ -43,9 +43,9 @@
     <div class="flex items-center justify-between">
       <div class="font-bold text-lg">Photobooth</div>
       <ul class="flex gap-6 text-sm">
-        <li><a href="home.blade.php" class="nav-link">Home</a></li>
-        <li><a href="about.blade.php" class="nav-link active">About</a></li>
-        <li><a href="contact.blade.php" class="nav-link">Contact</a></li>
+        <li><a href="home.php" class="nav-link">Home</a></li>
+        <li><a href="about.php" class="nav-link active">About</a></li>
+        <li><a href="contact.php" class="nav-link">Contact</a></li>
       </ul>
       <div class="font-bold text-lg">Aurami</div>
     </div>
