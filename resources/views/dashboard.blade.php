@@ -29,24 +29,48 @@
       <h2 class="text-2xl font-bold mb-6">Dashboard</h2>
 
       <!-- Summary Cards -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div class="bg-white rounded-lg shadow p-4">
-          <h3 class="text-sm text-gray-500">Total Transactions</h3>
-          <p class="text-2xl font-bold">1,245</p>
-        </div>
-        <div class="bg-white rounded-lg shadow p-4">
-          <h3 class="text-sm text-gray-500">Total Revenue</h3>
-          <p class="text-2xl font-bold">Rp123.456.789</p>
-        </div>
-        <div class="bg-white rounded-lg shadow p-4">
-          <h3 class="text-sm text-gray-500">Active Customers</h3>
-          <p class="text-2xl font-bold">560</p>
-        </div>
-        <div class="bg-white rounded-lg shadow p-4">
-          <h3 class="text-sm text-gray-500">Failed Payments</h3>
-          <p class="text-2xl font-bold text-red-500">32</p>
-        </div>
-      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+    <div class="bg-white rounded-lg shadow p-4">
+        <h3 class="text-sm text-gray-500">Total Transactions</h3>
+        <p class="text-2xl font-bold">{{ $totalTransactions }}</p>
+    </div>
+    <div class="bg-white rounded-lg shadow p-4">
+        <h3 class="text-sm text-gray-500">Total Revenue</h3>
+        <p class="text-2xl font-bold">Rp{{ number_format($totalRevenue, 0, ',', '.') }}</p>
+    </div>
+</div>
+
+<!-- Recent Activity diganti dengan Chart -->
+<div class="bg-white rounded-lg shadow p-6">
+    <h3 class="text-lg font-semibold mb-4">Transaction Statistics</h3>
+    <canvas id="transactionChart" height="100"></canvas>
+</div>
+
+<!-- Tambahkan script untuk chart -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('transactionChart').getContext('2d');
+    const chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            datasets: [{
+                label: 'Transactions',
+                data: @json(array_values($transactionsData)),
+                backgroundColor: 'rgba(79, 70, 229, 0.7)',
+                borderColor: 'rgba(79, 70, 229, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
 
       <!-- Recent Activity -->
       <div class="bg-white rounded-lg shadow p-6">
