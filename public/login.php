@@ -13,16 +13,11 @@
       <p class="text-sm text-gray-500">Sign in to manage your photobooth</p>
     </div>
 
-    <form action="login.php" method="POST" class="space-y-5">
+    <form action="{{ route('admin.login') }}" method="POST" class="space-y-5">
+      @csrf
       <div>
-        <label class="block text-sm font-medium text-gray-700">Username</label>
-        <input name="username" type="text" required
-               class="mt-1 w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500"/>
-      </div>
-
-      <div>
-        <label class="block text-sm font-medium text-gray-700">Password</label>
-        <input name="password" type="password" required
+        <label class="block text-sm font-medium text-gray-700">Email</label>
+        <input name="email" type="email" required
                class="mt-1 w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500"/>
       </div>
 

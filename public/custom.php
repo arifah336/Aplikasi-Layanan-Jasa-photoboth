@@ -26,7 +26,6 @@
     .photo-frame {
       aspect-ratio: 1/1;
       width: 100%;
-      /* height: 190px; */  /* HAPUS atau KOMENTARI ini */
       overflow: hidden;
       background-color: #f5f5f5;
       display: flex;
@@ -34,7 +33,6 @@
       align-items: center;
       margin-bottom: 10px;
     }
-
     .photo-frame img {
       width: 100%;
       height: 100%;
@@ -77,7 +75,7 @@
     <div class="space-y-6">
       <h2 class="text-lg font-semibold">Customize your photo</h2>
 
-      <!-- Frame Colors - SEMUA WARNA KEMBALI -->
+      <!-- Frame Colors -->
       <div>
         <p class="font-medium mb-2">Frame color:</p>
         <div id="colorOptions" class="flex flex-wrap gap-4">
@@ -112,6 +110,16 @@
     </div>
   </div>
 
+  <!-- Modal QR -->
+  <div id="qrModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-lg p-6 shadow-lg text-center max-w-xs w-full">
+      <h3 class="text-lg font-bold mb-4">Terima Kasih 🎉</h3>
+      <p class="text-sm mb-3">Dukung kami dengan donasi via QR di bawah ini:</p>
+      <img src="images/qr_dana.jpg" alt="QR Code" class="mx-auto mb-4 w-40 h-40 object-contain">
+      <button onclick="closeQrModal()" class="btn btn-sm btn-wide" style="background-color: #ff8ba7;">Tutup</button>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer class="footer footer-center p-4" style="background-color: #c3f0ca;">
     <aside>
@@ -119,80 +127,60 @@
     </aside>
   </footer>
 
+  <!-- SCRIPT -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <script>
-    // Debug: Log data from localStorage
     console.log("Loaded photos:", JSON.parse(localStorage.getItem('capturedPhotos')));
     console.log("Selected layout:", localStorage.getItem('selectedLayout'));
 
-    // Get photos from localStorage
     const capturedPhotos = JSON.parse(localStorage.getItem('capturedPhotos')) || [];
     const selectedLayout = localStorage.getItem('selectedLayout') || 'a';
     const photoContainer = document.getElementById('photoContainer');
 
-    // Check if there are photos
     if (capturedPhotos.length === 0) {
       alert('Tidak ada foto yang ditemukan. Silahkan ambil foto terlebih dahulu.');
       window.location.href = 'layout.php';
     }
 
-    // Display photos based on layout
     function displayPhotos() {
-  photoContainer.innerHTML = '';
+      photoContainer.innerHTML = '';
+      const photosContainer = document.createElement('div');
 
-  const photosContainer = document.createElement('div');
+      if (selectedLayout === 'd') {
+        photosContainer.className = 'grid grid-cols-2 gap-3 justify-center';
+        capturedPhotos.slice(0, 6).forEach((photo, index) => {
+          const frame = document.createElement('div');
+          frame.className = 'photo-frame';
+          const img = document.createElement('img');
+          img.src = photo;
+          img.alt = `Photo ${index + 1}`;
+          frame.appendChild(img);
+          photosContainer.appendChild(frame);
+        });
+      } else {
+        photosContainer.className = 'flex flex-col gap-3';
+        capturedPhotos.forEach((photo, index) => {
+          const frame = document.createElement('div');
+          frame.className = 'photo-frame';
+          const img = document.createElement('img');
+          img.src = photo;
+          img.alt = `Photo ${index + 1}`;
+          frame.appendChild(img);
+          photosContainer.appendChild(frame);
+        });
+      }
 
-  if (selectedLayout === 'd') {
-    photosContainer.className = 'grid grid-cols-2 gap-3 justify-center';
+      photoContainer.appendChild(photosContainer);
 
-    capturedPhotos.slice(0, 6).forEach((photo, index) => {
-      const frame = document.createElement('div');
-      frame.className = 'photo-frame';
+      const brandText = document.createElement('div');
+      brandText.className = 'brand-text';
+      brandText.innerHTML = `<div style="font-size: 24px; line-height: 1;">AURAMI</div>
+                             <div style="font-size: 14px; line-height: 1;">Photobooth</div>`;
+      photoContainer.appendChild(brandText);
+    }
 
-      const img = document.createElement('img');
-      img.src = photo;
-      img.alt = `Photo ${index + 1}`;
-      img.onerror = function () {
-        this.parentNode.innerHTML = '<div class="text-center p-2 text-xs">Gambar tidak dapat dimuat</div>';
-      };
-
-      frame.appendChild(img);
-      photosContainer.appendChild(frame);
-    });
-  } else {
-    photosContainer.className = 'flex flex-col gap-3';
-
-    capturedPhotos.forEach((photo, index) => {
-      const frame = document.createElement('div');
-      frame.className = 'photo-frame';
-
-      const img = document.createElement('img');
-      img.src = photo;
-      img.alt = `Photo ${index + 1}`;
-      img.onerror = function () {
-        this.parentNode.innerHTML = '<div class="text-center p-2 text-xs">Gambar tidak dapat dimuat</div>';
-      };
-
-      frame.appendChild(img);
-      photosContainer.appendChild(frame);
-    });
-  }
-
-  photoContainer.appendChild(photosContainer);
-
-  const brandText = document.createElement('div');
-  brandText.className = 'brand-text';
-  brandText.innerHTML = `
-    <div style="font-size: 24px; line-height: 1;">AURAMI</div>
-    <div style="font-size: 14px; line-height: 1;">Photobooth</div>
-  `;
-  photoContainer.appendChild(brandText);
-}
-
-
-    // Initialize
     displayPhotos();
 
-    // Frame color changes
     document.querySelectorAll('#colorOptions button').forEach(btn => {
       btn.addEventListener('click', () => {
         const selectedColor = btn.dataset.color;
@@ -200,12 +188,10 @@
           b.classList.remove('ring', 'ring-[#ff8ba7]', 'ring-offset-2');
         });
         btn.classList.add('ring', 'ring-[#ff8ba7]', 'ring-offset-2');
-        
         photoContainer.style.backgroundColor = selectedColor === "none" ? "white" : selectedColor;
       });
     });
 
-    // Photo shape change
     document.querySelectorAll('#shapeOptions button').forEach(btn => {
       btn.addEventListener('click', () => {
         const selectedShape = btn.dataset.shape;
@@ -213,11 +199,9 @@
           b.classList.remove('btn-active');
         });
         btn.classList.add('btn-active');
-
         const photoFrames = document.querySelectorAll('.photo-frame');
         photoFrames.forEach(frame => {
           frame.classList.remove('rounded-none', 'rounded-lg', 'rounded-full');
-          
           switch(selectedShape) {
             case 'square': frame.classList.add('rounded-none'); break;
             case 'rounded': frame.classList.add('rounded-lg'); break;
@@ -227,15 +211,40 @@
       });
     });
 
-    // Retake button
     document.getElementById('retakeBtn').addEventListener('click', () => {
       window.location.href = `camera.php?layout=${selectedLayout}`;
     });
 
-    // Download button
     document.getElementById('downloadBtn').addEventListener('click', () => {
-      alert('Your customized photo strip has been downloaded! (Simulasi)');
+      const photoElement = document.getElementById('photoContainer');
+
+      html2canvas(photoElement, {
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: null,
+        scale: 2,
+        width: photoElement.offsetWidth,
+        height: photoElement.offsetHeight
+      }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = `aurami_photobooth_${Date.now()}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+
+        // Setelah download selesai, tampilkan QR modal
+        setTimeout(() => {
+          document.getElementById('qrModal').classList.remove('hidden');
+        }, 500); // beri sedikit delay untuk memastikan download selesai
+      }).catch(err => {
+        console.error('Download failed:', err);
+        alert('Gagal mengunduh gambar.');
+      });
     });
+
+    function closeQrModal() {
+      document.getElementById('qrModal').classList.add('hidden');
+    }
+
   </script>
 </body>
 </html>

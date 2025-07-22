@@ -15,21 +15,18 @@
         <h1 class="text-xl font-bold">Admin</h1>
       </div>
       <nav class="space-y-4 text-sm">
-<<<<<<< HEAD
         <a href="dashboard.php" class="block text-white font-semibold">Dashboard</a>
         <a href="transtactions.php" class="block text-white">Transtactions</a>
         <a href="customers.php" class="block text-white">Customers</a>
         <a href="custome_layout.php" class="block text-white">Custome Layout</a>
         <a href="settings.php" class="block text-white">Settings</a>
         <a href="login.php" class="block text-white text-red-400 mt-10 hover:text-red-600">Logout</a>
-=======
         <a href="dashboard.blade.php" class="block text-white font-semibold">Dashboard</a>
         <a href="transtactions.blade.php" class="block text-white">Transtactions</a>
         <a href="customers.blade.php" class="block text-white">Customers</a>
         <a href="custome_layout.blade.php" class="block text-white">Custome Layout</a>
         <a href="settings.blade.php" class="block text-white">Settings</a>
         <a href="login.blade.php" class="block text-white text-red-400 mt-10 hover:text-red-600">Logout</a>
->>>>>>> 25bd180dd06b0831d1b3977dd2ed3b457749cffb
       </nav>
     </aside>
 
