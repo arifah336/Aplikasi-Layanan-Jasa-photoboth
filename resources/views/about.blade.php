@@ -61,7 +61,16 @@
       </div>
     </div>
 
-    <p class="italic text-sm text-right" style="color: #594a4e;">BY AURAMI_PHOTOBOOTH</p>
-  </div>
-</section>
-@endsection
+      <p class="italic text-sm text-right" style="color: #594a4e;">BY AURAMI_PHOTOBOOTH</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer footer-center p-4 text-base-content" style="background-color: #c3f0ca;">
+    <aside>
+      <p>&copy; <script>document.write(new Date().getFullYear())</script> - Created by AURAMI_PHOTOBOOTH</p>
+    </aside>
+  </footer>
+
+</body>
+</html>

@@ -33,24 +33,31 @@
         <input type="text" name="name" placeholder="Enter your name"
                class="input input-bordered w-full bg-[#faeee7] text-[#33272a]" required>
       </div>
-
-      <div>
-        <label class="block font-bold mb-1">Email</label>
-        <input type="email" name="email" placeholder="Enter your email address"
-               class="input input-bordered w-full bg-[#faeee7] text-[#33272a]" required>
+      <div class="flex-1 card bg-white shadow-xl p-8">
+        <form class="space-y-4">
+          <div>
+            <label for="name" class="block text-lg font-bold">Name</label>
+            <input type="text" id="name" placeholder="Enter your name" class="w-full p-3 rounded text-sm font-mono" style="background-color: #faeee7;" />
+          </div>
+          <div>
+            <label for="email" class="block text-lg font-bold">Email</label>
+            <input type="email" id="email" placeholder="Enter your email address" class="w-full p-3 rounded text-sm font-mono" style="background-color: #faeee7;" />
+          </div>
+          <div>
+            <label for="message" class="block text-lg font-bold">Message</label>
+            <textarea id="message" rows="5" placeholder="Type your message..." class="w-full p-3 rounded text-sm font-mono" style="background-color: #faeee7;"></textarea>
+          </div>
+          <button type="submit" class="btn uppercase font-bold tracking-wider" style="background-color: #ff8ba7; color: #33272a;">Send Message</button>
+        </form>
       </div>
+    </div>
+  </section>
 
-      <div>
-        <label class="block font-bold mb-1">Message</label>
-        <textarea name="message" rows="4" placeholder="Type your message..."
-                  class="textarea textarea-bordered w-full bg-[#faeee7] text-[#33272a]" required></textarea>
-      </div>
-
-      <button type="submit"
-              class="btn mt-2 w-full bg-[#ff8ba7] hover:bg-[#ec6c8c] text-white font-bold">
-        SEND MESSAGE
-      </button>
-    </form>
-  </div>
-</div>
-@endsection
+  <!-- Footer -->
+  <footer class="footer footer-center p-4" style="background-color: #c3f0ca;">
+    <aside>
+      <p>&copy; <script>document.write(new Date().getFullYear())</script> - Created by AURAMI_PHOTOBOOTH</p>
+    </aside>
+  </footer>
+</body>
+</html>
